@@ -4,15 +4,14 @@
 main() ->
     {ok, Data} = file:read_file("tracks.txt"),
     Lines = binary:split(Data, <<"\n">>, [global, trim_all]),
+
     Titles = [songgen:preprocess(Line) || Line <- Lines],
-    print_first_titles(Titles, 10),
+    CleanTitles = [Title || Title <- Titles, Title =/= <<>>],
+
+    Bigrams = songgen:build_bigrams(CleanTitles),
+
+    io:format("Generated title from love: ~p~n", [songgen:generate_title(<<"love">>, Bigrams, 5)]),
+    io:format("Generated title from you: ~p~n", [songgen:generate_title(<<"you">>, Bigrams, 5)]),
+    io:format("Generated title from always: ~p~n", [songgen:generate_title(<<"always">>, Bigrams, 5)]),
 
     ok.
-
-print_first_titles(_, 0) ->
-    ok;
-print_first_titles([], _) ->
-    ok;
-print_first_titles([Title | Rest], Count) ->
-    io:format("~s~n", [Title]),
-    print_first_titles(Rest, Count - 1).
