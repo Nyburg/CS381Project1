@@ -1,5 +1,8 @@
 # CS381 Project 1
 
+## Description
+
+This project uses Erlang to generate new song titles from an input dataset of existing track titles. The program preprocesses each line from the input file by extracting the title, removing extra title information, removing punctuation, and filtering out non-English characters. Then it builds a bigram map from the cleaned titles, where each word maps to the words that commonly follow it. Using a list of seed words from `seeds.txt`, the program generates new titles and writes them to `titles.txt`.
 
 ## Sources
 
@@ -11,5 +14,5 @@
 - https://github.com/eejenner/Erlang-Assorted-Examples/blob/master/homework4.erl: Used this simple implementation of a bigram as an example to understand the basic pairing idea. This one is different from ours though since it is creating all possible word pair combos between two strings, instead of building bigrams from adjacent words coming directly after one another.
 - Asked ChatGPT: "How should I be randomly selecting the next word in a bigram map but making sure that it's only looking at the top 10 most common?" This helped me figure out that I needed to use rand:uniform on a sublist with only the top 10 following words.
 - https://www.erlang.org/doc/apps/stdlib/rand.html: Used some more Erlang docs, specifically rand to understand how rand:uniform/1 works for selecting random integers within a range. Went hand in hand with the wider range info I learned from ChatGPT directly above. 
-- - https://www.erlang.org/doc/apps/stdlib/lists.html: Used to confirm `lists:reverse/1` for reversing the accumulated title words before joining them.
+- https://www.erlang.org/doc/apps/stdlib/lists.html: Used to confirm `lists:reverse/1` for reversing the accumulated title words before joining them.
 - https://www.erlang.org/doc/system/maps.html: Used to confirm `maps:is_key/2` for checking whether a generated word had already been used.
